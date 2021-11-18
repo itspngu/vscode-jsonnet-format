@@ -3,16 +3,16 @@
   "displayName": "jsonnet Formatter",
   "description": "Provide jsonnet vscode format support.",
   "version": "0.3.0",
-  "publisher": "xrc-inc",
+  "publisher": "itspngu",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/xreception/vscode-jsonnet-formatter.git"
+    "url": "git+https://github.com/itspngu/vscode-jsonnet-formatter.git"
   },
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/xreception/vscode-jsonnet-formatter/issues"
+    "url": "https://github.com/itspngu/vscode-jsonnet-formatter/issues"
   },
-  "homepage": "https://github.com/xreception/vscode-jsonnet-formatter#readme",
+  "homepage": "https://github.com/itspngu/vscode-jsonnet-formatter#readme",
   "engines": {
     "vscode": "^1.37.0"
   },
@@ -22,7 +22,7 @@
   "activationEvents": [
     "onLanguage:jsonnet"
   ],
-  "main": "./out/extension",
+  "main": "dist/extension",
   "contributes": {
     "languages": [
       {
@@ -51,14 +51,26 @@
         },
         "jsonnet-formatter.stringStyle": {
           "type": "string",
-          "enum": ["double", "single", "leave"],
+          "enum": [
+            "double",
+            "single",
+            "leave"
+          ],
           "description": "Enforce double, single quotes or 'leave'",
           "default": "single"
         },
         "jsonnet-formatter.commentStyle": {
           "type": "string",
-          "enum": ["hash", "slashes", "leave"],
-          "enumDescriptions": ["hash sign (#)", "slashes (//)", "leave without change"],
+          "enum": [
+            "hash",
+            "slashes",
+            "leave"
+          ],
+          "enumDescriptions": [
+            "hash sign (#)",
+            "slashes (//)",
+            "leave without change"
+          ],
           "description": "# (h), // (s), or 'leave'; never changes she-bang",
           "default": "slashes"
         },
@@ -68,17 +80,17 @@
           "default": true
         },
         "jsonnet-formatter.padArrays": {
-          "type":"boolean",
+          "type": "boolean",
           "description": "[ 1, 2, 3 ] instead of [1, 2, 3]",
           "default": false
         },
         "jsonnet-formatter.padObjects": {
-          "type":"boolean",
+          "type": "boolean",
           "description": "{ x: 1, y: 2 } instead of {x: 1, y: 2}",
-          "default":true
+          "default": true
         },
         "jsonnet-formatter.sortImports": {
-          "type":"boolean",
+          "type": "boolean",
           "description": "Sorting of imports",
           "default": true
         }
@@ -86,15 +98,16 @@
     }
   },
   "scripts": {
-    "vscode:prepublish": "rm -rf ./out; yarn run compile",
-    "compile": "tsc -p ./",
-    "watch": "tsc -watch -p ./"
+    "clean": "rimraf **/dist",
+    "build": "tsc -p ."
   },
   "devDependencies": {
     "@types/diff": "^4.0.1",
     "@types/node": "^12.0.0",
     "@types/vscode": "^1.37.0",
-    "typescript": "^3.5.0"
+    "rimraf": "^3.0.2",
+    "typescript": "^3.5.0",
+    "vsce": "^2.3.0"
   },
   "dependencies": {
     "diff": "^4.0.1"

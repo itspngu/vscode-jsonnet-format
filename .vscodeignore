@@ -1,7 +1,6 @@
 .gitignore
 .vscode/**
 **/*.map
-out/test/**
 src/**
 test/**
 tsconfig.json
