@@ -16,17 +16,17 @@ jobs:
         name: Set up node.js
         with:
           node-version: "14"
-      - run: yarn install
+      - run: yarn --ignore-engines install
         name: Install project dependencies
-      - run: yarn build
+      - run: yarn --ignore-engines build
         name: Build extension
-      - run: yarn vsce package
+      - run: yarn --ignore-engines vsce package
         name: Package extension
-      - run: yarn ovsx publish --pat "${OPEN_VSX_TOKEN}"
+      - run: yarn --ignore-engines ovsx publish --pat "${OPEN_VSX_TOKEN}"
         name: Publish extension to Open VSX Registry
         env:
           OPEN_VSX_TOKEN: ${{ secrets.OPEN_VSX_TOKEN }}
-      - run: yarn vsce publish --pat "${VSCE_TOKEN}"
+      - run: yarn --ignore-engines vsce publish --pat "${VSCE_TOKEN}"
         name: Publish extension to Visual Studio Marketplace
         env:
           VSCE_TOKEN: ${{ secrets.VSCE_TOKEN }}

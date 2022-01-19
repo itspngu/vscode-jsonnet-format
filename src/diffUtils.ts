@@ -1,9 +1,20 @@
-'use strict';
+"use strict";
 
-import { Position, Range, TextEdit, Uri, WorkspaceEdit, TextEditorEdit } from 'vscode';
-import * as jsDiff from 'diff';
+import {
+  Position,
+  Range,
+  TextEdit,
+  Uri,
+  WorkspaceEdit,
+  TextEditorEdit,
+} from "vscode";
+import * as jsDiff from "diff";
 
-export enum EditTypes { EDIT_DELETE, EDIT_INSERT, EDIT_REPLACE };
+export enum EditTypes {
+  EDIT_DELETE,
+  EDIT_INSERT,
+  EDIT_REPLACE,
+}
 
 export class Edit {
   action: number;
@@ -14,7 +25,7 @@ export class Edit {
   constructor(action: number, start: Position) {
     this.action = action;
     this.start = start;
-    this.text = '';
+    this.text = "";
   }
 
   // Creates TextEdit for current Edit
@@ -60,7 +71,11 @@ export class Edit {
         break;
 
       case EditTypes.EDIT_REPLACE:
-        workspaceEdit.replace(fileUri, new Range(this.start, this.end), this.text);
+        workspaceEdit.replace(
+          fileUri,
+          new Range(this.start, this.end),
+          this.text
+        );
         break;
     }
   }
@@ -87,22 +102,28 @@ function parseUniDiffs(diffOutput: jsDiff.ParsedDiff[]): FilePatch[] {
       let startLine = hunk.oldStart;
       hunk.lines.forEach((line) => {
         switch (line.substr(0, 1)) {
-          case '-':
+          case "-":
             if (edit == null) {
-              edit = new Edit(EditTypes.EDIT_DELETE, new Position(startLine - 1, 0));
+              edit = new Edit(
+                EditTypes.EDIT_DELETE,
+                new Position(startLine - 1, 0)
+              );
             }
             edit.end = new Position(startLine, 0);
             startLine++;
             break;
-          case '+':
+          case "+":
             if (edit == null) {
-              edit = new Edit(EditTypes.EDIT_INSERT, new Position(startLine - 1, 0));
+              edit = new Edit(
+                EditTypes.EDIT_INSERT,
+                new Position(startLine - 1, 0)
+              );
             } else if (edit.action === EditTypes.EDIT_DELETE) {
               edit.action = EditTypes.EDIT_REPLACE;
             }
-            edit.text += line.substr(1) + '\n';
+            edit.text += line.substr(1) + "\n";
             break;
-          case ' ':
+          case " ":
             startLine++;
             if (edit != null) {
               edits.push(edit);
@@ -121,7 +142,6 @@ function parseUniDiffs(diffOutput: jsDiff.ParsedDiff[]): FilePatch[] {
   });
 
   return filePatches;
-
 }
 
 /**
@@ -133,12 +153,23 @@ function parseUniDiffs(diffOutput: jsDiff.ParsedDiff[]): FilePatch[] {
  *
  * @returns A single FilePatch object
  */
-export function getEdits(fileName: string, oldStr: string, newStr: string): FilePatch {
-  if (process.platform === 'win32') {
-    oldStr = oldStr.split('\r\n').join('\n');
-    newStr = newStr.split('\r\n').join('\n');
+export function getEdits(
+  fileName: string,
+  oldStr: string,
+  newStr: string
+): FilePatch {
+  if (process.platform === "win32") {
+    oldStr = oldStr.split("\r\n").join("\n");
+    newStr = newStr.split("\r\n").join("\n");
   }
-  let unifiedDiffs = jsDiff.structuredPatch(fileName, fileName, oldStr, newStr, '', '');
+  let unifiedDiffs = jsDiff.structuredPatch(
+    fileName,
+    fileName,
+    oldStr,
+    newStr,
+    "",
+    ""
+  );
   let filePatches: FilePatch[] = parseUniDiffs([unifiedDiffs]);
   return filePatches[0];
 }

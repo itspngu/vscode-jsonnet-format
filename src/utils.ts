@@ -1,16 +1,20 @@
-'use strict';
+"use strict";
 
-import * as fs from 'fs';
-import * as path from 'path';
+import * as fs from "fs";
+import * as path from "path";
 
-let binPathCache: { [bin: string]: string; } = {};
+let binPathCache: { [bin: string]: string } = {};
 
-export function getBinPathFromEnvVar(toolName: string, envVarValue: string, appendBinToPath: boolean): string {
+export function getBinPathFromEnvVar(
+  toolName: string,
+  envVarValue: string,
+  appendBinToPath: boolean
+): string {
   toolName = correctBinname(toolName);
   if (envVarValue) {
     let paths = envVarValue.split(path.delimiter);
     for (let i = 0; i < paths.length; i++) {
-      let binpath = path.join(paths[i], appendBinToPath ? 'bin' : '', toolName);
+      let binpath = path.join(paths[i], appendBinToPath ? "bin" : "", toolName);
       if (fileExists(binpath)) {
         binPathCache[toolName] = binpath;
         return binpath;
@@ -21,10 +25,8 @@ export function getBinPathFromEnvVar(toolName: string, envVarValue: string, appe
 }
 
 function correctBinname(binname: string) {
-  if (process.platform === 'win32')
-    return binname + '.exe';
-  else
-    return binname;
+  if (process.platform === "win32") return binname + ".exe";
+  else return binname;
 }
 
 function fileExists(filePath: string): boolean {

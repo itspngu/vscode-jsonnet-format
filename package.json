@@ -1,18 +1,17 @@
 {
-  "name": "jsonnet-formatter",
-  "displayName": "jsonnet Formatter",
-  "description": "Provide jsonnet vscode format support.",
+  "name": "jsonnet-format",
+  "description": "Provides jsonnet formatting support for VScode/VScodium.",
   "version": "0.4.0",
   "publisher": "itspngu",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/itspngu/vscode-jsonnet-formatter.git"
+    "url": "git+https://github.com/itspngu/vscode-jsonnet-format.git"
   },
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/itspngu/vscode-jsonnet-formatter/issues"
+    "url": "https://github.com/itspngu/vscode-jsonnet-format/issues"
   },
-  "homepage": "https://github.com/itspngu/vscode-jsonnet-formatter#readme",
+  "homepage": "https://github.com/itspngu/vscode-jsonnet-format#readme",
   "engines": {
     "vscode": "^1.37.0"
   },
@@ -37,19 +36,19 @@
       }
     ],
     "configuration": {
-      "title": "jsonnet-formatter",
+      "title": "jsonnet-format",
       "properties": {
-        "jsonnet-formatter.indent": {
+        "jsonnet-format.indent": {
           "type": "integer",
           "description": "Number of spaces to indent by (0 will inherit from VS Code Formatting Options)",
           "default": 2
         },
-        "jsonnet-formatter.maxBlankLines": {
+        "jsonnet-format.maxBlankLines": {
           "type": "integer",
           "description": "Max vertical spacing, 0 means no change",
           "default": 2
         },
-        "jsonnet-formatter.stringStyle": {
+        "jsonnet-format.stringStyle": {
           "type": "string",
           "enum": [
             "double",
@@ -59,7 +58,7 @@
           "description": "Enforce double, single quotes or 'leave'",
           "default": "single"
         },
-        "jsonnet-formatter.commentStyle": {
+        "jsonnet-format.commentStyle": {
           "type": "string",
           "enum": [
             "hash",
@@ -74,22 +73,22 @@
           "description": "# (h), // (s), or 'leave'; never changes she-bang",
           "default": "slashes"
         },
-        "jsonnet-formatter.prettyFieldNames": {
+        "jsonnet-format.prettyFieldNames": {
           "type": "boolean",
           "description": "Use syntax sugar for fields and indexing",
           "default": true
         },
-        "jsonnet-formatter.padArrays": {
+        "jsonnet-format.padArrays": {
           "type": "boolean",
           "description": "[ 1, 2, 3 ] instead of [1, 2, 3]",
           "default": false
         },
-        "jsonnet-formatter.padObjects": {
+        "jsonnet-format.padObjects": {
           "type": "boolean",
           "description": "{ x: 1, y: 2 } instead of {x: 1, y: 2}",
           "default": true
         },
-        "jsonnet-formatter.sortImports": {
+        "jsonnet-format.sortImports": {
           "type": "boolean",
           "description": "Sorting of imports",
           "default": true
