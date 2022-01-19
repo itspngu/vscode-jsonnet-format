@@ -1,9 +1,10 @@
 name: Publish
 
 on:
+  workflow_dispatch: {}
   push:
-    branches: [master]
-  workflow_dispatch:
+    branches:
+      - master
 
 jobs:
   publish:
@@ -22,6 +23,10 @@ jobs:
       - run: yarn vsce package
         name: Package extension
       - run: yarn vsce publish --pat "${VSCE_TOKEN}"
-        name: Publish extension
+        name: Publish extension to Visual Studio Marketplace
         env:
           VSCE_TOKEN: ${{ secrets.VSCE_TOKEN }}
+      - run: yarn ovsx publish --pat "${OPEN_VSX_TOKEN}"
+        name: Publish extension to Open VSX Registry
+        env:
+          OPEN_VSX_TOKEN: ${{ secrets.OPEN_VSX_TOKEN }}
