@@ -1,3 +1,7 @@
+# ARCHIVAL NOTICE
+
+I'm not using this extension anymore and have no bandwidth to maintain it, hence I've decided to archive this repository.
+
 # Jsonnet Format
 
 This package provides jsonnet language formatter. Visual Studio Code will
